@@ -34,7 +34,22 @@ public class AtaLinkedList implements ProfileableList {
 
     @Override
     public void addFirst(final Double data) {
-        throw new UnsupportedOperationException();
+        // Create a new node with the given data and the current head as the next node
+        AtaNode newNode = new AtaNode(data, this.head);
+
+        // Update the head to point to the new node
+        this.head = newNode;
+
+        // If the list was previously empty, update the tail to also point to the new node
+        if (this.tail == null) {
+            this.tail = newNode;
+        }
+
+        // Increment the size of the list
+        this.size++;
+
+
+//        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -53,12 +68,32 @@ public class AtaLinkedList implements ProfileableList {
 
     @Override
     public Double getFirst() {
-        throw new UnsupportedOperationException();
+        return head.getData();
+
+//        throw new UnsupportedOperationException();
     }
 
     @Override
     public Double getMiddle() {
-        throw new UnsupportedOperationException();
+        if (this.head == null) {
+            // List is empty, handle this case as needed
+            return null;  // Return null if the list is empty
+            // Alternatively, you could throw an exception:
+            // throw new NoSuchElementException("The list is empty.");
+        }
+
+        // Initialize two pointers: slow and fast
+        AtaNode slowPointer = this.head;
+        AtaNode fastPointer = this.head;
+
+        // Move fastPointer twice as fast as slowPointer
+        while (fastPointer != null && fastPointer.getNext() != null) {
+            slowPointer = slowPointer.getNext();
+            fastPointer = fastPointer.getNext().getNext();
+        }
+
+        // When fastPointer reaches the end, slowPointer will be at the middle
+        return slowPointer.getData();
     }
 
     @Override
